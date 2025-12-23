@@ -4,15 +4,14 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 
-// Form verilerini okuyabilmek için gerekli ayarlar
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// "public" klasöründeki dosyaları (css, html, resim) dışarıya aç
+
 app.use(express.static('public'));
 
-// --- 1. ADMIN PANELİ SAYFASI ---
-// Tarayıcıdan /admin yazınca bu form gelecek
+
 app.get('/admin', (req, res) => {
     res.send(`
         <!DOCTYPE html>
@@ -32,7 +31,7 @@ app.get('/admin', (req, res) => {
             <h2 style="text-align:center;">Yeni İçerik Oluştur</h2>
             <form action="/admin/create" method="POST">
                 <label>Yönetici Şifresi:</label>
-                <input type="password" name="password" required placeholder="Şifre (1234)">
+                <input type="password" name="password" required placeholder="Şifre">
                 
                 <label>Sayfa Başlığı:</label>
                 <input type="text" name="baslik" required placeholder="Örn: Bu Hafta Neler Yaptım?">
@@ -47,25 +46,24 @@ app.get('/admin', (req, res) => {
     `);
 });
 
-// --- 2. DOSYA OLUŞTURMA VE KAYDETME İŞLEMİ (BACKEND) ---
+
 app.post('/admin/create', (req, res) => {
     const { password, baslik, icerik } = req.body;
 
-    // Basit güvenlik kontrolü
+    // mukemmel guvenlik
     if (password !== '1234') {
         return res.send('<h1 style="color:red; text-align:center;">Hatalı Şifre! 🚫</h1><p style="text-align:center;"><a href="/admin">Geri Dön</a></p>');
     }
 
-    // Dosya adını başlıktan türet (Boşlukları tire yap, küçült)
-    // Örn: "Bugün Neler Oldu" -> "bugun-neler-oldu.html"
+
     const turkceKarakterler = { 'ı': 'i', 'ğ': 'g', 'ü': 'u', 'ş': 's', 'ö': 'o', 'ç': 'c', 'İ': 'I', 'Ğ': 'G', 'Ü': 'U', 'Ş': 'S', 'Ö': 'O', 'Ç': 'C' };
     let temizBaslik = baslik.replace(/[ığüşöçİĞÜŞÖÇ]/g, harf => turkceKarakterler[harf]);
     const dosyaAdi = temizBaslik.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-') + '.html';
     
-    // Dosyanın kaydedileceği tam yol: ./public/dosya-adi.html
+
     const dosyaYolu = path.join(__dirname, 'public', dosyaAdi);
 
-    // Yeni oluşturulacak sayfanın HTML Taslağı
+   
     const htmlIcerigi = `
 <!DOCTYPE html>
 <html lang="tr">
@@ -91,7 +89,7 @@ app.post('/admin/create', (req, res) => {
 </body>
 </html>`;
 
-    // Dosyayı diske yaz (fs.writeFile)
+  
     fs.writeFile(dosyaYolu, htmlIcerigi, (err) => {
         if (err) {
             console.error(err);
@@ -100,7 +98,7 @@ app.post('/admin/create', (req, res) => {
         
         console.log(`${dosyaAdi} oluşturuldu!`);
         
-        // Başarılı sayfasına yönlendir
+       
         res.send(`
             <div style="font-family: sans-serif; text-align: center; padding: 50px;">
                 <h1 style="color: green;">✅ Başarılı!</h1>

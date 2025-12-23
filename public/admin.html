@@ -29,17 +29,17 @@
 
     <script>
         async function gonder() {
-            // HTML'den verileri alıyoruz
+       
             const password = document.getElementById('adminPass').value;
             const content = document.getElementById('dailyContent').value; // Burası artık hata vermez
 
-            // Boş mu diye kontrol et
+        
             if(!password || !content) { 
                 alert("Şifre ve yazı boş olamaz!"); 
                 return; 
             }
 
-            // Sunucuya gönder (Adresi düzelttik: /api/update-status)
+
             try {
                 const response = await fetch('/api/update-status', {
                     method: 'POST',
@@ -52,7 +52,7 @@
                     alert(result.message);
                     
                     if(result.success) {
-                        // Başarılıysa kutuyu temizle
+                   
                         document.getElementById('dailyContent').value = "";
                     }
                 } else {
