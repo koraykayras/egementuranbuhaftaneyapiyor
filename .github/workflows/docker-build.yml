@@ -1,36 +1,14 @@
 name: Docker Build CI
 
-name: Docker Build CI
-
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Kodlari Cek (Checkout)
-      uses: actions/checkout@v3
-
-    - name: Docker Imajini Olustur (Build)
-      run: docker build . --file Dockerfile --tag egemen-app:lateston:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-jobs:
-
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Kodlari Cek (Checkout)
-      uses: actions/checkout@v3
-
-    - name: Docker Imajini Olustur (Build)
-      run: docker build . --file Dockerfile --tag egemen-app:latest
+      - name: Kodlari Cek
+        uses: actions/checkout@v3
+      - name: Docker Imajini Olustur
+        run: docker build . -f Dockerfile -t egemen-app:latest
