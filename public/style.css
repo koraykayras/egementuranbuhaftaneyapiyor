@@ -1,0 +1,116 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 30px 40px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+}
+
+h1 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+}
+
+#content {
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.admin-link {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  opacity: 0.15;
+  font-size: 12px;
+  color: white;
+  text-decoration: none;
+}
+
+.admin-link:hover {
+  opacity: 0.6;
+}
+/* ========================= */
+/* 📱 MOBİL UYUM AYARLARI */
+/* ========================= */
+
+@media (max-width: 768px) {
+
+  body {
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+  }
+
+  .container {
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+
+  h1 {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  .content-box {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* Sağ alttaki admin butonu */
+  .admin-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    right: 15px;
+    bottom: 15px;
+  }
+
+  /* Admin panel kutusu */
+  .admin-panel {
+    width: 90%;
+    left: 5%;
+    right: 5%;
+    bottom: 80px;
+    padding: 15px;
+  }
+
+  input, textarea, button {
+    font-size: 16px;
+  }
+
+}
+.archive-item {
+  background: #111;
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.archive-item h3 {
+  margin: 0 0 5px 0;
+  font-size: 16px;
+  color: #00ffcc;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-top: 20px;
+  color: #00ffcc;
+  text-decoration: none;
+}

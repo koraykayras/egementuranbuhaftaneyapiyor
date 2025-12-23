@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Günün Durumu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 80%;
+            max-width: 500px;
+        }
+        .date { color: #888; font-weight: bold; margin-bottom: 20px; }
+        .content { font-size: 20px; color: #333; min-height: 50px; }
+        .admin-btn {
+            position: absolute; top: 20px; right: 20px;
+            color: #ccc; font-size: 24px; text-decoration: none;
+        }
+        .admin-btn:hover { color: #333; }
+    </style>
+</head>
+<body>
+
+    <a href="/admin" class="admin-btn"><i class="fa-solid fa-lock"></i></a>
+
+    <div class="container">
+        <div class="date" id="tarih">Yükleniyor...</div>
+        <div class="content" id="icerik">Lütfen bekleyin...</div>
+    </div>
+
+    <script>
+        // Sayfa açılınca sunucudan veriyi iste
+        fetch('/api/get-status')
+            .then(response => response.json())
+            .then(data => {
+                // HTML'deki kutuları bulup içini doldur
+                document.getElementById('tarih').innerText = data.date;
+                document.getElementById('icerik').innerText = data.content;
+            })
+            .catch(err => {
+                console.error("Hata:", err);
+                document.getElementById('icerik').innerText = "Veri çekilemedi!";
+            });
+    </script>
+</body>
+</html>

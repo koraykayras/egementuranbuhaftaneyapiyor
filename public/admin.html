@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Paneli</title>
+    <style>
+        body { font-family: sans-serif; background: #222; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .panel { background: #333; padding: 30px; border-radius: 10px; width: 400px; text-align: center; }
+        input, textarea, button { width: 100%; margin-bottom: 15px; padding: 10px; box-sizing: border-box; border-radius: 5px; border: none; }
+        textarea { height: 100px; resize: none; }
+        button { background: #28a745; color: white; cursor: pointer; font-weight: bold; }
+        button:hover { background: #218838; }
+        .back-link { color: #888; text-decoration: none; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <div class="panel">
+        <h2>Bugün Ne Yaptın?</h2>
+        
+        <input type="password" id="adminPass" placeholder="Admin Şifresi (1234)">
+        
+        <textarea id="dailyContent" placeholder="Bugünün raporunu yaz..."></textarea>
+        
+        <button onclick="gonder()">GÜNCELLE</button>
+        
+        <a href="/" class="back-link">← Ana Sayfaya Dön</a>
+    </div>
+
+    <script>
+        async function gonder() {
+            // HTML'den verileri alıyoruz
+            const password = document.getElementById('adminPass').value;
+            const content = document.getElementById('dailyContent').value; // Burası artık hata vermez
+
+            // Boş mu diye kontrol et
+            if(!password || !content) { 
+                alert("Şifre ve yazı boş olamaz!"); 
+                return; 
+            }
+
+            // Sunucuya gönder (Adresi düzelttik: /api/update-status)
+            try {
+                const response = await fetch('/api/update-status', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password, content })
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    alert(result.message);
+                    
+                    if(result.success) {
+                        // Başarılıysa kutuyu temizle
+                        document.getElementById('dailyContent').value = "";
+                    }
+                } else {
+                    alert("Sunucu hatası: " + response.status);
+                }
+            } catch (error) {
+                console.error("Hata:", error);
+                alert("Bir hata oluştu, konsola bak.");
+            }
+        }
+    </script>
+</body>
+</html>
