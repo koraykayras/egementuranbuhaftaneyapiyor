@@ -17,3 +17,6 @@
 
 ### not
 kendi forkunda küçük detaylı commitlerle ilerle, aşama bitişinde pr at.
+---
+### Geliştirici
+Bu proje **Koraay** tarafından Docker öğrenmek için geliştirildi
